@@ -1,0 +1,10 @@
+alias bat='batcat --theme OneHalfDark'
+alias bb='better-branch'
+alias bc='better-commits'
+alias clearhist="history -p && history -s"
+alias lsAaFhlp='ls -AaFhlp --color=auto'
+alias showos='lsb_release -a'
+alias treeAcfhsu='tree -Acfhsu'
+alias tree1='tree -a -L 1'
+alias tree2='tree -a -L 2'
+alias PG_CONNECTION_STRING_SAMPLE='echo "postgresql://username:password@hostname:port/database"'
