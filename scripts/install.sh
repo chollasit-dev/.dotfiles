@@ -43,9 +43,14 @@ sudo nala install -y \
     npm \
     nginx-extras \
     postgresql postgresql-contrib
-# fnm # TODO: Rust based Node.js version manager, follow GitHub manual
 # php
 # php-xdebug
 # composer
 
+# fnm
 curl -fsSL https://fnm.vercel.app/install | zsh -s -- --skip-shell
+
+# uv
+# TODO: Update Python version to LTS version when needed.
+curl -fsSL https://astral.sh/uv/install.sh | sh
+uv tool install --python 3.12 posting # install Python if needed

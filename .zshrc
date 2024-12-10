@@ -238,6 +238,13 @@ if [ -d "$FNM_PATH" ]; then
     )"
 fi
 
+UV_PATH="$HOME/.local/bin/env"
+# uv Python package manager
+if command -v uv uvx >/dev/null 2>&1 && [ -f "$UV_PATH" ]; then
+    # shellcheck source=/dev/null
+    source $UV_PATH
+fi
+
 # Node
 export PNPM_HOME="/home/user/.local/share/pnpm"
 case ":$PATH:" in
@@ -270,5 +277,8 @@ if command -v fnm >/dev/null 2>&1; then
                 ngrok \
                 tsx \
                 vercel
+
+        # uv
+        uv self update
     fi
 fi
