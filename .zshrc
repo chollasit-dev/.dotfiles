@@ -282,3 +282,8 @@ if command -v fnm >/dev/null 2>&1; then
         uv self update
     fi
 fi
+
+# Node
+if command -v node >/dev/null 2>&1; then
+    eval "$(node --completion-bash)"
+fi
