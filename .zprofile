@@ -11,22 +11,23 @@ for file in ${HISTORY_FILES[@]}; do
     [ -f "$file" ] && rm -f "$file" && echo "Removed $file"
 done
 
+CURRENT_DATE=$(date -I)
+
 # Monthly update
 if [ "$(date +%-d)" = "15" ]; then
-    UPDATE_LOG="$HOME/.update_logs"
-    LAST_UPDATE_DATE=$(tail -n 1 "$UPDATE_LOG")
-    CURRENT_DATE=$(date -I)
+    APT_UPDATE_LOG="$HOME/.apt_update_logs"
+    # Create `.apt_update_logs` file if it doesn't exist.
+    [ ! -f "$APT_UPDATE_LOG" ] && touch "$APT_UPDATE_LOG" && chmod =r "$APT_UPDATE_LOG"
 
-    [ ! -f "$UPDATE_LOG" ] && touch "$UPDATE_LOG"
+    APT_LAST_UPDATE_DATE=$(tail -n 1 "$APT_UPDATE_LOG")
 
-    if [ ! "$LAST_UPDATE_DATE" = "$CURRENT_DATE" ]; then
+    # Write success update log.
+    if [ ! "$APT_LAST_UPDATE_DATE" = "$CURRENT_DATE" ]; then
         sudo nala upgrade -y &&
-            sudo pnpm update -g &&
-            chmod +w "$UPDATE_LOG"
-        echo "$CURRENT_DATE" >>"$UPDATE_LOG"
+            chmod +w "$APT_UPDATE_LOG" &&
+            echo "$CURRENT_DATE" >>"$APT_UPDATE_LOG" &&
+            chmod -w "$APT_UPDATE_LOG"
     fi
-
-    chmod -w "$UPDATE_LOG"
 fi
 
 unset -v HISTORY_FILES CURRENT_DATE APT_UPDATE_LOG APT_LAST_UPDATE_DATE
