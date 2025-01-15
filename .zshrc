@@ -245,7 +245,7 @@ if command -v uv uvx >/dev/null 2>&1 && [ -f "$UV_PATH" ]; then
     source $UV_PATH
 fi
 
-# Node
+# fnm
 export PNPM_HOME="/home/user/.local/share/pnpm"
 case ":$PATH:" in
 *":$PNPM_HOME:"*) ;;
@@ -254,36 +254,52 @@ esac
 if command -v fnm >/dev/null 2>&1; then
     NODE_VERSION_PATH="$HOME/.node-version"
     NODE_LTS_VERSION=$(fnm ls-remote --lts --latest | sed 's/ .*$//')
-    if [ ! -f "$NODE_VERSION_PATH" ]; then
-        echo "$NODE_LTS_VERSION" >"$NODE_VERSION_PATH"
+
+    # Create `.node-version` file if it doesn't exist.
+    [ ! -f "$NODE_VERSION_PATH" ] && echo "$NODE_LTS_VERSION" >"$NODE_VERSION_PATH"
+
+    # Update all `npm` and `pip` packages every 15th of a month.
+    if [ "$(date +%-d)" = "15" ]; then
+        NPM_UPDATE_LOG="$HOME/.npm_update_logs"
+        # Create `.npm_update_logs` file if it doesn't exist.
+        [ ! -f "$NPM_UPDATE_LOG" ] && touch "$NPM_UPDATE_LOG" && chmod =r "$NPM_UPDATE_LOG"
+
+        NPM_LAST_UPDATE_DATE=$(tail -n 1 "$NPM_UPDATE_LOG")
+
+        if [ ! "$NPM_LAST_UPDATE_DATE" = "$CURRENT_DATE" ]; then
+            command -v yarn >/dev/null 2>&1 &&
+                corepack install -g yarn &&
+                corepack enable yarn
+            # && yarn config set --home enableTelementry 0 # TODO
+
+            command -v pnpm >/dev/null 2>&1 &&
+                corepack install -g pnpm@latest &&
+                corepack enable pnpm &&
+                pnpm install -g @nestjs/cli \
+                    better-commits \
+                    degit \
+                    ngrok \
+                    tsx \
+                    vercel
+
+            command -v uv >/dev/null 2>&1 && uv self update
+
+            # Write success update log.
+            chmod +w "$NPM_UPDATE_LOG" &&
+                echo "$CURRENT_DATE" >>"$NPM_UPDATE_LOG" &&
+                chmod -w "$NPM_UPDATE_LOG"
+        fi
     fi
 
+    # Update Node to latest LTS version if available.
     NODE_CURRENT_VERSION=$(node -v 2>/dev/null)
     if [ "$NODE_CURRENT_VERSION" != "$NODE_LTS_VERSION" ]; then
         fnm install "$NODE_LTS_VERSION" &&
             echo "$NODE_LTS_VERSION" >"$NODE_VERSION_PATH"
-
-        # yarn
-        ! command -v yarn >/dev/null 2>&1 &&
-            corepack enable yarn &&
-            corepack install -g yarn # && yarn config set --home enableTelementry 0 # TODO
-
-        # pnpm
-        ! command -v pnpm >/dev/null 2>&1 &&
-            corepack enable pnpm &&
-            corepack install -g pnpm@latest &&
-            sudo pnpm install -g better-commits \
-                degit \
-                ngrok \
-                tsx \
-                vercel
-
-        # uv
-        uv self update
     fi
 fi
 
-# Node
+# Node auto completion
 if command -v node >/dev/null 2>&1; then
     eval "$(node --completion-bash)"
 fi
