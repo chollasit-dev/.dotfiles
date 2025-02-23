@@ -2,6 +2,7 @@ HISTORY_FILES=(
     "$HOME/.HISTFILE"
     "$HOME/.node_repl_history"
     "$HOME/.npm/_logs"
+    "$HOME/.sqlite_history"
     "$HOME/.psql_history"
     "$HOME/.python_history"
     "$HOME/.ts_node_repl_history"
