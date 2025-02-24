@@ -303,3 +303,7 @@ fi
 if command -v node >/dev/null 2>&1; then
     eval "$(node --completion-bash)"
 fi
+
+# zsh-syntax-highlighting
+# ! ALWAYS LAST
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
