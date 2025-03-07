@@ -3,6 +3,7 @@ setopt LIST_TYPES
 
 # If you come from bash you might have to change your $PATH.
 export PATH="$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH"
+# Go path.
 export PATH="$HOME/go/bin:$HOME/bin:$PATH:/usr/local/go/bin"
 
 # Path to your Oh My Zsh installation.
@@ -33,7 +34,7 @@ zstyle ':omz:update' mode auto # update automatically without asking
 # zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
-zstyle ':omz:update' frequency 13
+zstyle ':omz:update' frequency 15
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 DISABLE_MAGIC_FUNCTIONS="true"
@@ -49,7 +50,7 @@ ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # You can also set it to another string to have that shown instead of the default red dots.
-COMPLETION_WAITING_DOTS="%F{yellow}I'm a chill guy, bro...%f"
+COMPLETION_WAITING_DOTS="%F{yellow}Chill, bro...%f"
 # Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
 # COMPLETION_WAITING_DOTS="true"
 
@@ -214,96 +215,36 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-if [ -f "$HOME/.oh-my-zsh/aliases.zsh" ]; then
-    # shellcheck source=/dev/null
-    source "$HOME/.oh-my-zsh/aliases.zsh"
-    echo "Loaded $HOME/.oh-my-zsh/aliases.zsh"
-fi
+DOTFILES="$HOME/.dotfiles"
 
-if command -v thefuck >/dev/null 2>&1; then
-    eval "$(thefuck --alias)"
-fi
-
-# fnm
-FNM_PATH="/home/user/.local/share/fnm"
-if [ -d "$FNM_PATH" ]; then
-    export PATH="/home/user/.local/share/fnm:$PATH"
-    eval "$(
-        fnm env \
-            --use-on-cd \
-            --version-file-strategy=recursive \
-            --corepack-enabled \
-            --resolve-engines \
-            --shell zsh
-    )"
-fi
-
-UV_PATH="$HOME/.local/bin/env"
-# uv Python package manager
-if command -v uv uvx >/dev/null 2>&1 && [ -f "$UV_PATH" ]; then
-    # shellcheck source=/dev/null
-    source $UV_PATH
-fi
-
-# fnm
-export PNPM_HOME="/home/user/.local/share/pnpm"
-case ":$PATH:" in
-*":$PNPM_HOME:"*) ;;
-*) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-if command -v fnm >/dev/null 2>&1; then
-    NODE_VERSION_PATH="$HOME/.node-version"
-    NODE_LTS_VERSION=$(fnm ls-remote --lts --latest | sed 's/ .*$//')
-
-    # Create `.node-version` file if it doesn't exist.
-    [ ! -f "$NODE_VERSION_PATH" ] && echo "$NODE_LTS_VERSION" >"$NODE_VERSION_PATH"
-
-    # Update all `npm` and `pip` packages every 15th of a month.
-    if [ "$(date +%-d)" = "15" ]; then
-        NPM_UPDATE_LOG="$HOME/.npm_update_logs"
-        # Create `.npm_update_logs` file if it doesn't exist.
-        [ ! -f "$NPM_UPDATE_LOG" ] && touch "$NPM_UPDATE_LOG" && chmod =r "$NPM_UPDATE_LOG"
-
-        NPM_LAST_UPDATE_DATE=$(tail -n 1 "$NPM_UPDATE_LOG")
-
-        if [ ! "$NPM_LAST_UPDATE_DATE" = "$CURRENT_DATE" ]; then
-            command -v yarn >/dev/null 2>&1 &&
-                corepack install -g yarn &&
-                corepack enable yarn
-            # && yarn config set --home enableTelementry 0 # TODO
-
-            command -v pnpm >/dev/null 2>&1 &&
-                corepack install -g pnpm@latest &&
-                corepack enable pnpm &&
-                pnpm install -g @nestjs/cli \
-                    better-commits \
-                    degit \
-                    ngrok \
-                    tsx \
-                    vercel
-
-            command -v uv >/dev/null 2>&1 && uv self update
-
-            # Write success update log.
-            chmod +w "$NPM_UPDATE_LOG" &&
-                echo "$CURRENT_DATE" >>"$NPM_UPDATE_LOG" &&
-                chmod -w "$NPM_UPDATE_LOG"
+_invoke_script() {
+    if [ -f $1 ]; then
+        # shellcheck source=/dev/null
+        source "$1"
+        if [ $? -eq 0 ]; then
+            echo "Run $1"
+        else
+            echo "Failed to run $1"
         fi
+    else
+        echo "Cannot find $1"
     fi
+}
 
-    # Update Node to latest LTS version if available.
-    NODE_CURRENT_VERSION=$(node -v 2>/dev/null)
-    if [ "$NODE_CURRENT_VERSION" != "$NODE_LTS_VERSION" ]; then
-        fnm install "$NODE_LTS_VERSION" &&
-            echo "$NODE_LTS_VERSION" >"$NODE_VERSION_PATH"
-    fi
-fi
+CUSTOM_ALIASES="$DOTFILES/oh-my-zsh/aliases.zsh"
+_invoke_script "$CUSTOM_ALIASES" && unset -v CUSTOM_ALIASES
 
-# Node auto completion
-if command -v node >/dev/null 2>&1; then
-    eval "$(node --completion-bash)"
-fi
+VERSION_MANAGER="$DOTFILES/scripts/profile/version_manager.sh"
+_invoke_script "$VERSION_MANAGER" && unset -v VERSION_MANAGER
 
-# zsh-syntax-highlighting
+UPDATE_SCRIPT="$DOTFILES/scripts/profile/update.sh"
+_invoke_script "$UPDATE_SCRIPT" && unset -v UPDATE_SCRIPT
+
+CARAPACE="$DOTFILES/scripts/profile/carapace.sh"
+_invoke_script "$CARAPACE" && unset -v CARAPACE
+
 # ! ALWAYS LAST
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+SYNTAX_HIGHLIGHTING="$DOTFILES/scripts/profile/syntax_highlighting.zsh"
+_invoke_script "$SYNTAX_HIGHLIGHTING" && unset -v SYNTAX_HIGHLIGHTING
+
+unset -f _invoke_script
