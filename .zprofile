@@ -8,14 +8,17 @@ HISTORY_FILES=(
     "$HOME/.ts_node_repl_history"
     "$HOME/.zsh_history"
 )
-for file in ${HISTORY_FILES[@]}; do
+for file in "${HISTORY_FILES[@]}"; do
     [ -f "$file" ] && rm -f "$file" && echo "Removed $file"
 done
 
-CURRENT_DATE=$(date -I)
+unset -v HISTORY_FILES
 
 # Monthly update
-if [ "$(date +%-d)" = "15" ]; then
+CURRENT_DATE=$(date -I)
+UPDATE_DATE="15"
+
+if [ "$(date +%-d)" = "$UPDATE_DATE" ]; then
     APT_UPDATE_LOG="$HOME/.apt_update_logs"
     # Create `.apt_update_logs` file if it doesn't exist.
     [ ! -f "$APT_UPDATE_LOG" ] && touch "$APT_UPDATE_LOG" && chmod =r "$APT_UPDATE_LOG"
@@ -31,4 +34,9 @@ if [ "$(date +%-d)" = "15" ]; then
     fi
 fi
 
-unset -v HISTORY_FILES CURRENT_DATE APT_UPDATE_LOG APT_LAST_UPDATE_DATE
+unset -v CURRENT_DATE UPDATE_DATE APT_UPDATE_LOG APT_LAST_UPDATE_DATE
+
+# Wayland socket
+if [ ! -e "${XDG_RUNTIME_DIR:=/run/user/$(id -u)}/${WAYLAND_DISPLAY}" ]; then
+    ln -s "/mnt/wslg/runtime-dir/wayland-0" "$XDG_RUNTIME_DIR" && echo "Created Wayland socket symlink"
+fi
