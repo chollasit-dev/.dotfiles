@@ -52,4 +52,9 @@ if ! command -v posting; then
     uv tool install --python 3.12 posting && echo "Install posting success"
 fi
 
+# glow
+if command -v go &>/dev/null; then
+  go install github.com/charmbracelet/glow@latest
+fi
+
 unset -v share_packages debian_packages && echo "share_packages and debian_packages arrays unsetted"
