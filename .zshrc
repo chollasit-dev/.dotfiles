@@ -184,4 +184,7 @@ _invoke_script "$CARAPACE" && unset -v CARAPACE
 SYNTAX_HIGHLIGHTING="$DOTFILES/scripts/profile/syntax_highlighting.zsh"
 _invoke_script "$SYNTAX_HIGHLIGHTING" && unset -v SYNTAX_HIGHLIGHTING
 
+SRC_SECRETS="$DOTFILES/secrets/env_var.sh"
+_invoke_script "$SRC_SECRETS" && unset -v SRC_SECRETS
+
 unset -f _invoke_script
