@@ -77,118 +77,51 @@ HIST_STAMPS="yyyy-mm-dd"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    aliases
-    # ansible
-    # autoenv
-    # autopep8
-    # aws
-    branch
-    colored-man-pages
-    colorize # Syntax highlighting for file contents supports over 300 languages.
-    command-not-found
-    common-aliases
-    # composer
-    copyfile
-    copypath
-    cp
-    debian
-    dircycle
-    direnv
-    docker
-    docker-compose
-    dotenv
-    emoji-clock
-    emoji
-    emotty # Get return and use emoji in prompt.
-    encode64
-    # flutter
-    fnm
-    fzf
-    # gcloud # Google Cloud SDK CLI
-    gh
-    git-auto-fetch
-    git-commit
-    git-prompt
-    git
-    github
-    gitignore
-    globalias
-    golang
-    gpg-agent
-    history
-    # homestead
-    httpie
-    ipfs
-    isodate # ISO 8601 date format
-    # jira
-    jsontools
-    # keychain # Setup and load selected both gpg and ssh.
-    # kubectl
-    # kubectx # Add kubectx_prompt_info() function to shown name of active kubectl context
-    # laravel laravel4 laravel5
-    lighthouse
-    # mongo-atlas
-    # mongocli
-    # ng # Angular CLI
-    # ngrok
-    node
-    nodenv
-    npm
-    # nvm
-    otp # Create OTP with `oathtool`, kept in GPG-encrypted file
-    pass
-    # pep8
-    perms # Quick UNIX file permissions manager
-    pip
-    pipenv
-    pj  # Project jump
-    pm2 # production-extended Nodemon
-    # poetry # Auto change poetry environment based on `pyproject.toml`` for each directory.
-    # poetry-env
-    postgres
-    pre-commit
-    pylint
-    python
-    qrcode # Generate QR code via CLI using `QRcode.show` via cURL
-    react-native
-    redis-cli
-    rsync # TODO
-    safe-paste
-    ssh-agent
-    ssh
-    # starship # Initialize starship prompt
-    stripe
-    sudo
-    systemadmin
-    systemd
-    # terraform
-    # thefuck
-    themes
-    tig # Useful Git aliases
-    tldr
-    tmux
-    # transfer # CLI file sharing service
-    # ubuntu
-    ufw      # Uncomplicated Firewall
-    urltools # Url encoder
-    uv
-    # vagrant-prompt
-    # vagrant
-    # vi-mode
-    # vim-interaction # Interaction between shell and Vim itself
-    vscode
-    web-search # Search web via CLI
-    yarn
-    zsh-interactive-cd
-    zsh-navigation-tools
-    zoxide
+  # Shared with my NixOS
+  "alias-finder"
+  "catimg"
+  "colored-man-pages"
+  "command-not-found"
+  "copybuffer" # `ctrl + o` copy to clipboard
+  "copyfile"
+  "copypath"
+  "dircycle"
+  "dirpersist"
+  "dotenv"
+  "emoji"
+  "emoji-clock"
+  "extract"
+  "fancy-ctrl-z" # switch between bg, fg
+  "fzf"
+  "git-commit"
+  "gitignore"
+  "globalias"
+  "history"
+  "jira"
+  "mongo-atlas"
+  "mongocli"
+  "ng"
+  "otp"
+  "pm2"
+  "safe-paste"
+  "shell-proxy"
+  "sudo"
+  "systemadmin"
+  "systemd"
+  "taskwarrior"
+  "urltools"
+  "zsh-interactive-cd"
+  "zsh-navigation-tools"
+
+  # Debian
+  themes
+  uv
 )
 
 # shellcheck source=/dev/null
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
