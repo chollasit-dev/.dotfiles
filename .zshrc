@@ -152,21 +152,27 @@ export EDITOR='nvim'
 DOTFILES="$HOME/.dotfiles"
 
 _invoke_script() {
-    if [ -f $1 ]; then
-        # shellcheck source=/dev/null
-        source "$1"
-        if [ $? -eq 0 ]; then
-            echo "Run $1"
-        else
-            echo "Failed to run $1"
-        fi
+  if [ -f $1 ]; then
+    # shellcheck source=/dev/null
+    source "$1"
+    if [ $? -eq 0 ]; then
+      print "${fg[green]}Run $1${reset_color}"
     else
-        echo "Cannot find $1"
+      # TODO: check if run `taskwarrior.sh`
+      if [ $? -eq 1 ]; then
+        print "${fg[green]}Run $1${reset_color}"
+        echo "No task left! Happy coding!!"
+      else
+        print "${fg[red]}Failed to run $1${reset_color}"
+      fi
     fi
+  else
+    print "${fg[red]}Cannot find $1${reset_color}"
+  fi
 }
 
-CUSTOM_ALIASES="$DOTFILES/oh-my-zsh/aliases.zsh"
-_invoke_script "$CUSTOM_ALIASES" && unset -v CUSTOM_ALIASES
+SRC_SECRETS="$DOTFILES/oh-my-zsh/aliases.zsh"
+_invoke_script "$SRC_SECRETS" && unset -v SRC_SECRETS
 
 VERSION_MANAGER="$DOTFILES/scripts/profile/version_manager.sh"
 _invoke_script "$VERSION_MANAGER" && unset -v VERSION_MANAGER
