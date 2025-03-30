@@ -5,7 +5,8 @@ setopt LIST_TYPES
 export PATH="$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH"
 # Go path.
 export PATH="$HOME/go/bin:$HOME/bin:$PATH:/usr/local/go/bin"
-
+# Neovim
+export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -197,7 +198,7 @@ source $ZSH/oh-my-zsh.sh
 # if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='vim'
 # else
-#   export EDITOR='nvim'
+export EDITOR='nvim'
 # fi
 
 # Compilation flags
