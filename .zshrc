@@ -240,6 +240,9 @@ _invoke_script "$VERSION_MANAGER" && unset -v VERSION_MANAGER
 UPDATE_SCRIPT="$DOTFILES/scripts/profile/update.sh"
 _invoke_script "$UPDATE_SCRIPT" && unset -v UPDATE_SCRIPT
 
+TASKWARRIOR="$DOTFILES/scripts/profile/taskwarrior.sh"
+_invoke_script "$TASKWARRIOR" && unset -v TASKWARRIOR
+
 CARAPACE="$DOTFILES/scripts/profile/carapace.sh"
 _invoke_script "$CARAPACE" && unset -v CARAPACE
 
