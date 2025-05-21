@@ -27,13 +27,15 @@ share_packages=(
 
 debian_packages=(
   dotenv
+  litecli
   nodejs
   npm
+  pgcli
   python3
   python3-pip
   python3-venv
-  wl-clipboard
   stow
+  wl-clipboard
 )
 
 sudo apt update &&

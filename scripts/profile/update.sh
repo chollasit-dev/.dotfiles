@@ -6,11 +6,17 @@ PNPM_GLOBAL_PACKAGES=(
   @sourcegraph/cli
   degit
   live-server
+  mongosh
   ngrok
   tsx
   vercel
 )
 PNPM_HOME_PACKAGES=(
+  prettier-plugin-css-order
+  prettier-plugin-organize-attributes
+  prettier-plugin-organize-imports
+  prettier-plugin-packagejson
+  prettier-plugin-jsdoc
   prettier-plugin-tailwindcss
 )
 
