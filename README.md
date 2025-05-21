@@ -4,8 +4,8 @@
 
 ### ZSH Syntax Highlighing
 
-av
-Since the creator/author recommended manual installation, let's start by installing **zsh-syntax-highlighting** via package managers.
+Since the creator/author recommended manual installation, let's start by
+installing **zsh-syntax-highlighting** via package managers.
 
 1. For **Debian** based, use **apt**.
 
@@ -24,7 +24,8 @@ git clone --depth=1 "$remote_repo" "$local_directory"
 unset -v remote_repo local_directory
 ```
 
-After download the source, utilize the plugin by adding this to bottom of `.zshrc`.
+After download the source, utilize the plugin by adding this to bottom of
+`.zshrc`.
 
 <!-- TODO: Check whether option 2 is corrected. -->
 
@@ -36,7 +37,8 @@ source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 ```
 
-Reference: [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md)
+Reference:
+[zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md)
 
 ### Spaceship
 
@@ -51,7 +53,8 @@ git clone --depth=1 "$remote_repo" "$local_directory"
 unset -v remote_repo local_directory
 ```
 
-Create a symlink from custom plugin directory to the default directory for `oh-my-zsh` to detect the plugin.
+Create a symlink from custom plugin directory to the default directory for
+`oh-my-zsh` to detect the plugin.
 
 ```sh
 ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
@@ -76,15 +79,19 @@ wget "https://github.com/filiparag/wikiman/releases/download/2.13.2/$package" &&
 unset -v package
 ```
 
-Reference: [Wikiman GitHub repository](https://github.com/filiparag/wikiman?tab=readme-ov-file#js-repo-pjax-container)
+Reference:
+[Wikiman GitHub repository](https://github.com/filiparag/wikiman?tab=readme-ov-file#js-repo-pjax-container)
 
 ## Troubleshooting
 
 ### Systemd
 
-Somehow, even **Systemd** is already support since 2022 (based on the blog below). My Fresh default installation of a distro (Debian in my case), didn't come with Systemd enabled out of the box, which I don't know why...
+Somehow, even **Systemd** is already support since 2022 (based on the blog
+below). My Fresh default installation of a distro (Debian in my case), didn't
+come with Systemd enabled out of the box, which I don't know why...
 
-Therefore, enable **Systemd** by creating `wsl.conf` inside the target WSL distro.
+Therefore, enable **Systemd** by creating `wsl.conf` inside the target WSL
+distro.
 
 ```sh
 sudo vim.tiny /etc/wsl.conf
@@ -97,13 +104,15 @@ Add this configuration to the file.
 systemd=true
 ```
 
-Reference: [Microsoft dev blogs](https://devblogs.microsoft.com/commandline/systemd-support-is-now-available-in-wsl/)
+Reference:
+[Microsoft dev blogs](https://devblogs.microsoft.com/commandline/systemd-support-is-now-available-in-wsl/)
 
 ### Wayland
 
 **Issue**: Cannot connect to Wayland server when enabling **Systemd** for WSL.
 
-This happened when the Wayland socket is not found. To fix this, create a symlink.
+This happened when the Wayland socket is not found. To fix this, create a
+symlink.
 
 ```sh
 ln -s "/mnt/wslg/runtime-dir/wayland-0" /run/user/$(id -u)/
