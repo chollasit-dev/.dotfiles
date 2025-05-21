@@ -4,4 +4,3 @@
 .mode table
 
 PRAGMA foreign_keys = on;
-PRAGMA journal_mode = WAL;
