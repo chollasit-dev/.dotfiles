@@ -5,13 +5,10 @@ share_packages=(
   carapace-bin
   direnv
   ffmpeg
-  fzf
   gh
   git
-  imagemagick
   jq
   pass
-  ripgrep
   taskwarrior
   tig
   tldr
@@ -21,7 +18,6 @@ share_packages=(
   wikiman
   yq
   zip
-  zoxide
   zsh
 )
 
