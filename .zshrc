@@ -171,6 +171,9 @@ _invoke_script() {
   fi
 }
 
+WAYLAND_SOCKET="$DOTFILES/scripts/profile/wayland-socket.sh"
+_invoke_script "$WAYLAND_SOCKET" && unset -v WAYLAND_SOCKET
+
 SRC_SECRETS="$DOTFILES/oh-my-zsh/aliases.zsh"
 _invoke_script "$SRC_SECRETS" && unset -v SRC_SECRETS
 

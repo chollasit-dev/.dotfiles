@@ -38,8 +38,3 @@ if [ "$(date +%-d)" = "$UPDATE_DATE" ]; then
 fi
 
 unset -v CURRENT_DATE UPDATE_DATE APT_UPDATE_LOG APT_LAST_UPDATE_DATE
-
-# Wayland socket
-if [ ! -e "${XDG_RUNTIME_DIR:=/run/user/$(id -u)}/${WAYLAND_DISPLAY}" ]; then
-  ln -s "/mnt/wslg/runtime-dir/wayland-0" "$XDG_RUNTIME_DIR" && echo "Created Wayland socket symlink"
-fi
